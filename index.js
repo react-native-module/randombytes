@@ -1,6 +1,6 @@
-if (typeof Buffer === 'undefined') {
-  global.Buffer = require('buffer').Buffer
-}
+const Buffer = typeof global.Buffer === 'undefined'
+  ? require('buffer').Buffer
+  : global.Buffer
 
 const sjcl = require('sjcl')
 const RNRandomBytes = require('react-native').NativeModules.RNRandomBytes
