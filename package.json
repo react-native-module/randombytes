@@ -14,8 +14,8 @@
     "test": "echo 'tests not set up for React Native yet'"
   },
   "dependencies": {
-    "buffer": "^4.9.1",
-    "sjcl": "^1.0.3"
+    "@react-native-module/get-random-values": "^1.8.0-alpha.0",
+    "buffer": "^4.9.1"
   },
   "devDependencies": {
     "@types/node": "^18.0.4",
