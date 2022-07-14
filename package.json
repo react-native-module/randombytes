@@ -1,27 +1,30 @@
 {
-  "name": "react-native-randombytes",
+  "author": "sacru2red <sacru2red@gmail.com>",
+  "name": "@react-native-module/randombytes",
+  "description": "implementation of randomBytes for React Native",
   "version": "3.6.1",
-  "description": "randomBytes for react-native",
   "main": "index.js",
+  "homepage": "https://github.com/react-native-module/randombytes",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mvayngrib/react-native-randombytes.git"
+    "url": "https://github.com/react-native-module/randombytes.git"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo 'tests not set up for React Native yet'"
   },
-  "keywords": [
-    "react-component",
-    "react-native",
-    "randomBytes",
-    "rng",
-    "ios",
-    "android"
-  ],
   "dependencies": {
     "buffer": "^4.9.1",
     "sjcl": "^1.0.3"
   },
-  "author": "Mark Vayngrib <mark.vayngrib@lablz.com> (http://github.com/mvayngrib)",
+  "keywords": [
+    "react native",
+    "react-native",
+    "randomBytes",
+    "random-bytes",
+    "rng",
+    "ios",
+    "android",
+    "web"
+  ],
   "license": "ISC"
 }

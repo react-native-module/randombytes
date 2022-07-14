@@ -1,36 +1,32 @@
-# react-native-randombytes
+# react-native-module/randombytes
 
 ## Usage
 
 ```js
-import { randomBytes } from 'react-native-randombytes'
+import { randomBytes } from "@react-native-module/randombytes";
 
 // synchronous API
-// uses SJCL
-const rand = randomBytes(4)
+const rand = randomBytes(4);
 
 // asynchronous API
 // uses iOS-side SecRandomCopyBytes
 randomBytes(4, (err, bytes) => {
   // bytes is a Buffer object
-  console.log(bytes.toString('hex'))
-})
+  console.log(bytes.toString("hex"));
+});
 ```
 
 ## Installation
 
-1. Follow the steps in the next section
-1. You have two options depending on your needs:
-    1. if you're trying to get Node.js or browser crypto modules working in React Native, follow the installation workflow in [react-native-crypto](https://github.com/tradle/react-native-crypto).
-    1. if you only need asynchronous random bytes generation, and don't care about getting back `Buffer` objects, you can do the following:
+A typical workflow:
 
-    ```js
-    import { NativeModules } from 'react-native'
-    const { RNRandomBytes } = NativeModules
-    RNRandomBytes.randomBytes(32, (err, bytes) => {
-      // bytes is a base64string
-    })
-    ```
+```
+npm install --save @react-native-module/randombytes
+```
+
+```
+yarn add @react-native-module/randombytes
+```
 
 ### Automatic - Android / iOS (recommended)
 
@@ -44,16 +40,15 @@ If Automatic installation failed you, dry your tears and read on.
 
 #### `iOS`
 
-* Drag RNRandomBytes.xcodeproj from node_modules/react-native-randombytes into your XCode project.
+- Drag RNRandomBytes.xcodeproj from node_modules/react-native-randombytes into your XCode project.
 
-* Click on the project in XCode, go to Build Phases, then Link Binary With Libraries and add `libRNRandomBytes.a`
+- Click on the project in XCode, go to Build Phases, then Link Binary With Libraries and add `libRNRandomBytes.a`
 
 Confused? See an example with screenshots [here](http://facebook.github.io/react-native/docs/linking-libraries-ios.html#content)
 
-
 #### `Android`
 
-* Update Gradle Settings
+- Update Gradle Settings
 
 ```gradle
 // file: android/settings.gradle
@@ -63,7 +58,7 @@ include ':randombytes', ':app'
 project(':randombytes').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-randombytes/android')
 ```
 
-* Update Gradle Build
+- Update Gradle Build
 
 ```gradle
 // file: android/app/build.gradle
@@ -75,7 +70,7 @@ dependencies {
 }
 ```
 
-* Register React Package
+- Register React Package
 
 ```java
 ...
@@ -107,7 +102,6 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
 ```
 
 ### `Windows`
- 
 
 ```bash
 react-native link react-native-randombytes
@@ -116,4 +110,3 @@ react-native link react-native-randombytes
 Depending on your project versions and the state of RN-Windows this may not always work. If it does not, a manual installation guide can be found here:
 
 https://github.com/Microsoft/react-native-windows/blob/master/docs/LinkingLibrariesWindows.md
-
