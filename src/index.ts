@@ -33,14 +33,14 @@ function randomBytesWithoutNativeModule (size: number, callback?: randomBytesCal
   }
 }
 
-function randomBytes (size: number, callback?: randomBytesCallback) {
+function randomBytes (size: number, callback?: randomBytesCallback): Buffer | void {
   if (callback == null) {
     return randomBytesWithoutNativeModule(size)
   } else {
     // For running on Not native runtime
     const isRunningOnReactNative = globalThis.navigator && globalThis.navigator.product && globalThis.navigator.product === 'ReactNative'
     if (!isRunningOnReactNative) {
-      if (callback) {
+      if (callback != null) {
         randomBytesWithoutNativeModule(size, callback)
         return
       } else {
