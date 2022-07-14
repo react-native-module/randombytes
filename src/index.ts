@@ -19,13 +19,13 @@ function randomBytesWithoutNativeModule (size: number, callback?: randomBytesCal
     } else {
       getRandomValues(bytes)
     }
-    if (callback) {
+    if (callback != null) {
       callback(null, bytes)
       return
     }
     return bytes
-  } catch(err) {
-    if (callback) {
+  } catch (err) {
+    if (callback != null) {
       callback(err, null)
     } else {
       throw err
@@ -34,7 +34,7 @@ function randomBytesWithoutNativeModule (size: number, callback?: randomBytesCal
 }
 
 function randomBytes (size: number, callback?: randomBytesCallback) {
-  if (!callback) {
+  if (callback == null) {
     return randomBytesWithoutNativeModule(size)
   } else {
     // For running on Not native runtime
@@ -51,7 +51,7 @@ function randomBytes (size: number, callback?: randomBytesCallback) {
 
   const RNRandomBytes = require('react-native').NativeModules.RNRandomBytes
   RNRandomBytes.randomBytes(size, function (err: Error | null, base64String: string) {
-    if (err) {
+    if (err != null) {
       callback(err, null)
     } else {
       callback(null, NodeBuffer.from(base64String, 'base64'))

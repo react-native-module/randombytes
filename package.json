@@ -10,7 +10,7 @@
     "url": "https://github.com/react-native-module/randombytes.git"
   },
   "scripts": {
-    "standard": "standard",
+    "standard": "ts-standard ./src/*",
     "test": "echo 'tests not set up for React Native yet'",
     "build": "tsc -p ."
   },
@@ -20,8 +20,8 @@
   },
   "devDependencies": {
     "@types/node": "^18.0.4",
-    "standard": "^17.0.0",
-    "typescript": "^4.7.4"
+    "ts-standard": "^11.0.0",
+    "typescript": "^4.4.4"
   },
   "license": "ISC",
   "keywords": [
@@ -33,5 +33,10 @@
     "ios",
     "android",
     "web"
-  ]
+  ],
+  "ts-standard": {
+    "ignore": [
+      "dist"
+    ]
+  }
 }
