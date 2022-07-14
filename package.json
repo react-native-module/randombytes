@@ -17,6 +17,10 @@
     "buffer": "^4.9.1",
     "sjcl": "^1.0.3"
   },
+  "devDependencies": {
+    "standard": "^17.0.0"
+  },
+  "license": "ISC",
   "keywords": [
     "react native",
     "react-native",
@@ -26,9 +30,5 @@
     "ios",
     "android",
     "web"
-  ],
-  "license": "ISC",
-  "devDependencies": {
-    "standard": "^17.0.0"
-  }
+  ]
 }
