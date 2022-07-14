@@ -4,36 +4,59 @@ const NodeBuffer: BufferConstructor = typeof global.Buffer === 'undefined'
   ? require('buffer').Buffer
   : global.Buffer
 
-const RNRandomBytes = require('react-native').NativeModules.RNRandomBytes
-
-function toBuffer (nativeStr: string) {
-  return NodeBuffer.from(nativeStr, 'base64')
-}
-
 type randomBytesCallback = (err: Error | null, buf: Buffer) => void
-function randomBytes(size: number): Buffer;
-function randomBytes(size: number, callback: randomBytesCallback): void;
+
+const MAX_BYTES = 65536
+function randomBytesWithoutNativeModule (size: number, callback?: randomBytesCallback): Buffer | void {
+  try {
+    const bytes = Buffer.alloc(size)
+    // this is the max bytes crypto.getRandomValues
+    // https://github.com/crypto-browserify/randombytes/blob/f18ded32b209f0d4c637608a11ae042ae96b4c2e/browser.js#L31
+    if (size > MAX_BYTES) {
+      for (let i = 0; i < bytes.byteLength; i += MAX_BYTES) {
+        getRandomValues(bytes.subarray(i, i + MAX_BYTES))
+      }
+    } else {
+      getRandomValues(bytes)
+    }
+    if (callback) {
+      callback(null, bytes)
+      return
+    }
+    return bytes
+  } catch(err) {
+    if (callback) {
+      callback(err, null)
+    } else {
+      throw err
+    }
+  }
+}
 
 function randomBytes (size: number, callback?: randomBytesCallback) {
   if (!callback) {
-    // const wordCount = Math.ceil(size * 0.25)
-    // const randomBytes = sjcl.random.randomWords(wordCount, 10)
-    // let hexString = sjcl.codec.hex.fromBits(randomBytes)
-    // hexString = hexString.substr(0, size * 2)
-    // return Buffer.from(hexString, 'hex')
-    const MAX_BYTES = 65536
-    const bytes = Buffer.alloc(4)
-    for (let i = 0; i < bytes.byteLength; i += MAX_BYTES) {
-      getRandomValues(bytes.subarray(i, i + MAX_BYTES))
+    return randomBytesWithoutNativeModule(size)
+  } else {
+    // For running on Not native runtime
+    const isRunningOnReactNative = globalThis.navigator && globalThis.navigator.product && globalThis.navigator.product === 'ReactNative'
+    if (!isRunningOnReactNative) {
+      if (callback) {
+        randomBytesWithoutNativeModule(size, callback)
+        return
+      } else {
+        return randomBytesWithoutNativeModule(size)
+      }
     }
-    return bytes
   }
 
+  const RNRandomBytes = require('react-native').NativeModules.RNRandomBytes
   RNRandomBytes.randomBytes(size, function (err: Error | null, base64String: string) {
     if (err) {
       callback(err, null)
     } else {
-      callback(null, toBuffer(base64String))
+      callback(null, NodeBuffer.from(base64String, 'base64'))
     }
   })
 }
+
+module.exports = randomBytes
