@@ -18,7 +18,9 @@
     "sjcl": "^1.0.3"
   },
   "devDependencies": {
-    "standard": "^17.0.0"
+    "@types/node": "^18.0.4",
+    "standard": "^17.0.0",
+    "typescript": "^4.7.4"
   },
   "license": "ISC",
   "keywords": [
