@@ -10,6 +10,7 @@
     "url": "https://github.com/react-native-module/randombytes.git"
   },
   "scripts": {
+    "standard": "standard",
     "test": "echo 'tests not set up for React Native yet'"
   },
   "dependencies": {
@@ -26,5 +27,8 @@
     "android",
     "web"
   ],
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "standard": "^17.0.0"
+  }
 }
