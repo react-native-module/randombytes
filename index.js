@@ -2,18 +2,18 @@ if (typeof Buffer === 'undefined') {
   global.Buffer = require('buffer').Buffer
 }
 
-let sjcl = require('sjcl')
-let RNRandomBytes = require('react-native').NativeModules.RNRandomBytes
+const sjcl = require('sjcl')
+const RNRandomBytes = require('react-native').NativeModules.RNRandomBytes
 
 function noop () {}
 
 function toBuffer (nativeStr) {
-  return new Buffer(nativeStr, 'base64')
+  return Buffer.from(nativeStr, 'base64')
 }
 
 function init () {
   if (RNRandomBytes.seed) {
-    let seedBuffer = toBuffer(RNRandomBytes.seed)
+    const seedBuffer = toBuffer(RNRandomBytes.seed)
     addEntropy(seedBuffer)
   } else {
     seedSJCL()
@@ -21,8 +21,8 @@ function init () {
 }
 
 function addEntropy (entropyBuf) {
-  let hexString = entropyBuf.toString('hex')
-  let stanfordSeed = sjcl.codec.hex.toBits(hexString)
+  const hexString = entropyBuf.toString('hex')
+  const stanfordSeed = sjcl.codec.hex.toBits(hexString)
   sjcl.random.addEntropy(stanfordSeed)
 }
 
@@ -37,15 +37,15 @@ export function seedSJCL (cb) {
 
 export function randomBytes (length, cb) {
   if (!cb) {
-    let size = length
-    let wordCount = Math.ceil(size * 0.25)
-    let randomBytes = sjcl.random.randomWords(wordCount, 10)
+    const size = length
+    const wordCount = Math.ceil(size * 0.25)
+    const randomBytes = sjcl.random.randomWords(wordCount, 10)
     let hexString = sjcl.codec.hex.fromBits(randomBytes)
     hexString = hexString.substr(0, size * 2)
-    return new Buffer(hexString, 'hex')
+    return Buffer.from(hexString, 'hex')
   }
 
-  RNRandomBytes.randomBytes(length, function(err, base64String) {
+  RNRandomBytes.randomBytes(length, function (err, base64String) {
     if (err) {
       cb(err)
     } else {
