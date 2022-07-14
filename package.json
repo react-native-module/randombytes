@@ -15,7 +15,7 @@
     "build": "tsc -p ."
   },
   "dependencies": {
-    "@react-native-module/get-random-values": "^1.8.0-alpha.1",
+    "@react-native-module/get-random-values": "^1.8.1",
     "buffer": "^4.9.1"
   },
   "devDependencies": {
