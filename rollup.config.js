@@ -25,9 +25,8 @@ export default inputSrc
       plugins: [
         typescript(),
         nodeResolve({
-          preferBuiltins: format === 'cjs'
+          preferBuiltins: false
         }),
-        // https://velog.io/@peterkimzz/rollup-%ED%94%8C%EB%9F%AC%EA%B7%B8%EC%9D%B8
         // CommonJS 로 작성된 모듈들을 ES6 바꾸어서 rollup이 해석할 수 있게 도와줍니다.
         commonjs({
           extensions: [...extensions, ".js"]
