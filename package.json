@@ -21,7 +21,7 @@
   "dependencies": {
     "@react-native-module/get-random-values": "^1.8.2",
     "@react-native-module/utility": "^0.0.3",
-    "buffer": "^4.9.1"
+    "buffer": "^6.0.3"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^22.0.1",

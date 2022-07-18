@@ -16,6 +16,7 @@ export default inputSrc
       output: {
         dir: `lib/${format}`,
         format,
+        exports: "auto"
       },
       // @TODO
       // check rollup update to remove /lib/{format}/node_modules
