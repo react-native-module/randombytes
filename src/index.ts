@@ -1,14 +1,15 @@
 import { getRandomValues } from '@react-native-module/get-random-values'
 import { Environment } from '@react-native-module/utility'
+import { Buffer as NodeBuffer } from 'buffer'
 
-const NodeBuffer: BufferConstructor = typeof Buffer === 'undefined'
-  ? require('buffer').Buffer
-  : Buffer
-
-type randomBytesCallback = (err: Error | null, buf: Buffer) => void
+type randomBytesCallback = (err: Error | null, buf: Buffer | null) => undefined
 
 const MAX_BYTES = 65536
-function randomBytesWithoutNativeModule (size: number, callback?: randomBytesCallback): Buffer | void {
+
+function randomBytesWithoutNativeModule (size: number): Buffer
+function randomBytesWithoutNativeModule (size: number, callback: randomBytesCallback): undefined
+
+function randomBytesWithoutNativeModule (size: number, callback?: randomBytesCallback): Buffer | undefined {
   try {
     const bytes = Buffer.alloc(size)
     // this is the max bytes crypto.getRandomValues
@@ -34,16 +35,17 @@ function randomBytesWithoutNativeModule (size: number, callback?: randomBytesCal
   }
 }
 
-function randomBytes (size: number, callback?: randomBytesCallback): Buffer | void {
+export function randomBytes (size: number): Buffer
+export function randomBytes (size: number, callback: randomBytesCallback): undefined
+
+export function randomBytes (size: number, callback?: randomBytesCallback): Buffer | undefined {
   if (callback == null) {
     return randomBytesWithoutNativeModule(size)
   } else {
-    
     // For running on Not native runtime
     if (Environment !== 'NativeMobile') {
       if (callback != null) {
-        randomBytesWithoutNativeModule(size, callback)
-        return
+        return randomBytesWithoutNativeModule(size, callback)
       } else {
         return randomBytesWithoutNativeModule(size)
       }
@@ -59,9 +61,10 @@ function randomBytes (size: number, callback?: randomBytesCallback): Buffer | vo
         callback(null, NodeBuffer.from(base64String, 'base64'))
       }
     })
+  // if you reached here
+  // may your environment is not supported
+  // Please submit PR
   } catch (error) {
-    callback(err, null)
+    callback(error, null)
   }
 }
-
-module.exports = randomBytes
