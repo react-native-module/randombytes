@@ -1,8 +1,9 @@
-const getRandomValues = require('@react-native-module/get-random-values')
+import { getRandomValues } from '@react-native-module/get-random-values'
+import { Environment } from '@react-native-module/utility'
 
-const NodeBuffer: BufferConstructor = typeof global.Buffer === 'undefined'
+const NodeBuffer: BufferConstructor = typeof Buffer === 'undefined'
   ? require('buffer').Buffer
-  : global.Buffer
+  : Buffer
 
 type randomBytesCallback = (err: Error | null, buf: Buffer) => void
 
@@ -37,9 +38,9 @@ function randomBytes (size: number, callback?: randomBytesCallback): Buffer | vo
   if (callback == null) {
     return randomBytesWithoutNativeModule(size)
   } else {
+    
     // For running on Not native runtime
-    const isRunningOnReactNative = globalThis.navigator && globalThis.navigator.product && globalThis.navigator.product === 'ReactNative'
-    if (!isRunningOnReactNative) {
+    if (Environment !== 'NativeMobile') {
       if (callback != null) {
         randomBytesWithoutNativeModule(size, callback)
         return
@@ -49,14 +50,18 @@ function randomBytes (size: number, callback?: randomBytesCallback): Buffer | vo
     }
   }
 
-  const RNRandomBytes = require('react-native').NativeModules.RNRandomBytes
-  RNRandomBytes.randomBytes(size, function (err: Error | null, base64String: string) {
-    if (err != null) {
-      callback(err, null)
-    } else {
-      callback(null, NodeBuffer.from(base64String, 'base64'))
-    }
-  })
+  try {
+    const RNRandomBytes = require('react-native').NativeModules.RNRandomBytes
+    RNRandomBytes.randomBytes(size, function (err: Error | null, base64String: string) {
+      if (err != null) {
+        callback(err, null)
+      } else {
+        callback(null, NodeBuffer.from(base64String, 'base64'))
+      }
+    })
+  } catch (error) {
+    callback(err, null)
+  }
 }
 
 module.exports = randomBytes
