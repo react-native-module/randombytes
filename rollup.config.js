@@ -18,10 +18,12 @@ export default inputSrc
         format,
         exports: "auto"
       },
-      // @TODO
-      // check rollup update to remove /lib/{format}/node_modules
       preserveModules: true,
-      preserveEntrySignatures: true,
+      external: [
+        '@react-native-module/get-random-values',
+        '@react-native-module/utility',
+        'buffer',
+      ],
       plugins: [
         typescript(),
         nodeResolve({
