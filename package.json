@@ -6,7 +6,12 @@
   "main": "lib/cjs/index.js",
   "module": "lib/es/index.js",
   "types": "lib/types/index.d.ts",
-  "react-native": "src/index",
+  "browser": {
+    "react-native": false
+  },
+  "react-native": {
+    "react-native": "react-native"
+  },
   "source": "src/index",
   "homepage": "https://github.com/react-native-module/randombytes",
   "repository": {
