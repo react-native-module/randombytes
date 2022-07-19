@@ -1,15 +1,17 @@
-const getRandomValues = require('@react-native-module/get-random-values')
+import { getRandomValues } from '@react-native-module/get-random-values'
+import { Environment } from '@react-native-module/utility'
+import { Buffer as NodeBuffer } from 'buffer'
 
-const NodeBuffer: BufferConstructor = typeof global.Buffer === 'undefined'
-  ? require('buffer').Buffer
-  : global.Buffer
-
-type randomBytesCallback = (err: Error | null, buf: Buffer) => void
+type randomBytesCallback = (err: Error | null, buf: NodeBuffer | null) => undefined
 
 const MAX_BYTES = 65536
-function randomBytesWithoutNativeModule (size: number, callback?: randomBytesCallback): Buffer | void {
+
+function randomBytesWithoutNativeModule (size: number): NodeBuffer
+function randomBytesWithoutNativeModule (size: number, callback: randomBytesCallback): undefined
+
+function randomBytesWithoutNativeModule (size: number, callback?: randomBytesCallback): NodeBuffer | undefined {
   try {
-    const bytes = Buffer.alloc(size)
+    const bytes = NodeBuffer.alloc(size)
     // this is the max bytes crypto.getRandomValues
     // https://github.com/crypto-browserify/randombytes/blob/f18ded32b209f0d4c637608a11ae042ae96b4c2e/browser.js#L31
     if (size > MAX_BYTES) {
@@ -33,30 +35,36 @@ function randomBytesWithoutNativeModule (size: number, callback?: randomBytesCal
   }
 }
 
-function randomBytes (size: number, callback?: randomBytesCallback): Buffer | void {
+export function randomBytes (size: number): NodeBuffer
+export function randomBytes (size: number, callback: randomBytesCallback): undefined
+
+export function randomBytes (size: number, callback?: randomBytesCallback): NodeBuffer | undefined {
   if (callback == null) {
     return randomBytesWithoutNativeModule(size)
   } else {
     // For running on Not native runtime
-    const isRunningOnReactNative = globalThis.navigator && globalThis.navigator.product && globalThis.navigator.product === 'ReactNative'
-    if (!isRunningOnReactNative) {
+    if (Environment !== 'NativeMobile') {
       if (callback != null) {
-        randomBytesWithoutNativeModule(size, callback)
-        return
+        return randomBytesWithoutNativeModule(size, callback)
       } else {
         return randomBytesWithoutNativeModule(size)
       }
     }
   }
 
-  const RNRandomBytes = require('react-native').NativeModules.RNRandomBytes
-  RNRandomBytes.randomBytes(size, function (err: Error | null, base64String: string) {
-    if (err != null) {
-      callback(err, null)
-    } else {
-      callback(null, NodeBuffer.from(base64String, 'base64'))
-    }
-  })
+  try {
+    const RNRandomBytes = require('react-native').NativeModules.RNRandomBytes
+    RNRandomBytes.randomBytes(size, function (err: Error | null, base64String: string) {
+      if (err != null) {
+        callback(err, null)
+      } else {
+        callback(null, NodeBuffer.from(base64String, 'base64'))
+      }
+    })
+  // if you reached here
+  // may your environment is not supported
+  // Please submit PR
+  } catch (error) {
+    callback(error, null)
+  }
 }
-
-module.exports = randomBytes

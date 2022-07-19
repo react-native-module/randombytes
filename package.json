@@ -2,26 +2,43 @@
   "author": "sacru2red <sacru2red@gmail.com>",
   "name": "@react-native-module/randombytes",
   "description": "implementation of randomBytes for React Native",
-  "version": "3.6.2",
-  "main": "dist/index.js",
+  "version": "3.6.6-0",
+  "main": "lib/cjs/src/index.js",
+  "module": "lib/es/src/index.js",
+  "types": "lib/types/index.d.ts",
   "homepage": "https://github.com/react-native-module/randombytes",
   "repository": {
     "type": "git",
     "url": "https://github.com/react-native-module/randombytes.git"
   },
   "scripts": {
-    "standard": "ts-standard ./src/*",
-    "test": "echo 'tests not set up for React Native yet'",
-    "build": "tsc -p ."
+    "lint": "eslint",
+    "build": "rimraf ./lib && rollup -c ./rollup.config.js && npm run build:types",
+    "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir lib/types",
+    "release": "npm run build && release-it",
+    "test": "echo 'tests not set up for React Native yet'"
   },
   "dependencies": {
-    "@react-native-module/get-random-values": "^1.8.1",
-    "buffer": "^4.9.1"
+    "@react-native-module/get-random-values": "^1.8.5-0",
+    "@react-native-module/utility": "^0.0.3",
+    "buffer": "^6.0.3"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^22.0.1",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "@rollup/plugin-typescript": "^8.3.3",
     "@types/node": "^18.0.4",
-    "ts-standard": "^11.0.0",
-    "typescript": "^4.4.4"
+    "@typescript-eslint/eslint-plugin": "^5.30.6",
+    "@typescript-eslint/parser": "^5.30.6",
+    "eslint": "^8.20.0",
+    "eslint-config-standard-with-typescript": "^22.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.2.4",
+    "eslint-plugin-promise": "^6.0.0",
+    "release-it": "^15.1.2",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.77.0",
+    "typescript": "^4.7.4"
   },
   "license": "ISC",
   "keywords": [
@@ -33,10 +50,5 @@
     "ios",
     "android",
     "web"
-  ],
-  "ts-standard": {
-    "ignore": [
-      "dist"
-    ]
-  }
+  ]
 }
