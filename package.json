@@ -20,8 +20,8 @@
     "test": "echo 'tests not set up for React Native yet'"
   },
   "dependencies": {
-    "@react-native-module/get-random-values": "^1.8.5-2",
-    "@react-native-module/utility": "^0.0.3",
+    "@react-native-module/get-random-values": "^1.8.5-3",
+    "@react-native-module/utility": "^0.0.4-0",
     "buffer": "^6.0.3"
   },
   "devDependencies": {
