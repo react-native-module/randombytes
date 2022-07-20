@@ -2,7 +2,7 @@
   "author": "sacru2red <sacru2red@gmail.com>",
   "name": "@react-native-module/randombytes",
   "description": "implementation of randomBytes for React Native",
-  "version": "3.6.6-2",
+  "version": "3.6.6-3",
   "main": "lib/cjs/index.js",
   "module": "lib/es/index.js",
   "types": "lib/types/index.d.ts",
