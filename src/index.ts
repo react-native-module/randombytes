@@ -35,10 +35,10 @@ function randomBytesWithoutNativeModule (size: number, callback?: randomBytesCal
   }
 }
 
-export function randomBytes (size: number): NodeBuffer
-export function randomBytes (size: number, callback: randomBytesCallback): undefined
+function randomBytes (size: number): NodeBuffer
+function randomBytes (size: number, callback: randomBytesCallback): undefined
 
-export function randomBytes (size: number, callback?: randomBytesCallback): NodeBuffer | undefined {
+function randomBytes (size: number, callback?: randomBytesCallback): NodeBuffer | undefined {
   if (callback == null) {
     return randomBytesWithoutNativeModule(size)
   } else {
@@ -68,3 +68,5 @@ export function randomBytes (size: number, callback?: randomBytesCallback): Node
     callback(error, null)
   }
 }
+
+export default randomBytes

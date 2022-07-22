@@ -7,6 +7,7 @@
   "module": "lib/es/index.js",
   "types": "lib/types/index.d.ts",
   "source": "src/index",
+  "react-native": "src/index",
   "homepage": "https://github.com/react-native-module/randombytes",
   "repository": {
     "type": "git",
