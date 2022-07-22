@@ -1,39 +1,8 @@
-import { getRandomValues } from '@react-native-module/get-random-values'
 import { Environment } from '@react-native-module/utility'
 import { Buffer as NodeBuffer } from 'buffer'
+import { randomBytesWithoutNativeModule } from './randomBytesWithoutNativeModule'
 
-type randomBytesCallback = (err: Error | null, buf: NodeBuffer | null) => undefined
-
-const MAX_BYTES = 65536
-
-function randomBytesWithoutNativeModule (size: number): NodeBuffer
-function randomBytesWithoutNativeModule (size: number, callback: randomBytesCallback): undefined
-
-function randomBytesWithoutNativeModule (size: number, callback?: randomBytesCallback): NodeBuffer | undefined {
-  try {
-    const bytes = NodeBuffer.alloc(size)
-    // this is the max bytes crypto.getRandomValues
-    // https://github.com/crypto-browserify/randombytes/blob/f18ded32b209f0d4c637608a11ae042ae96b4c2e/browser.js#L31
-    if (size > MAX_BYTES) {
-      for (let i = 0; i < bytes.byteLength; i += MAX_BYTES) {
-        getRandomValues(bytes.subarray(i, i + MAX_BYTES))
-      }
-    } else {
-      getRandomValues(bytes)
-    }
-    if (callback != null) {
-      callback(null, bytes)
-      return
-    }
-    return bytes
-  } catch (err) {
-    if (callback != null) {
-      callback(err, null)
-    } else {
-      throw err
-    }
-  }
-}
+export type randomBytesCallback = (err: Error | null, buf: NodeBuffer | null) => undefined
 
 function randomBytes (size: number): NodeBuffer
 function randomBytes (size: number, callback: randomBytesCallback): undefined
