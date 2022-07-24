@@ -20,7 +20,6 @@ export default inputSrc
       },
       preserveModules: true,
       external: [
-        '@react-native-module/get-random-values',
         '@react-native-module/utility',
         'buffer',
       ],

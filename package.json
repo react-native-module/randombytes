@@ -6,8 +6,10 @@
   "main": "lib/cjs/index.js",
   "module": "lib/es/index.js",
   "types": "lib/types/index.d.ts",
-  "source": "src/index",
-  "react-native": "src/index",
+  "source": "src/index.ts",
+  "react-native": {
+    "crypto": false
+  },
   "homepage": "https://github.com/react-native-module/randombytes",
   "repository": {
     "type": "git",
@@ -21,7 +23,6 @@
     "test": "echo 'tests not set up for React Native yet'"
   },
   "dependencies": {
-    "@react-native-module/get-random-values": "^1.8.5-3",
     "@react-native-module/utility": "^0.0.4-0",
     "buffer": "^6.0.3"
   },

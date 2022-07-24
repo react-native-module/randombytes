@@ -7,34 +7,36 @@ export type randomBytesCallback = (err: Error | null, buf: NodeBuffer | null) =>
 function randomBytes (size: number): NodeBuffer
 function randomBytes (size: number, callback: randomBytesCallback): undefined
 
-function randomBytes (size: number, callback?: randomBytesCallback): NodeBuffer | undefined {
-  if (callback == null) {
-    return randomBytesWithoutNativeModule(size)
-  } else {
-    // For running on Not native runtime
-    if (Environment !== 'NativeMobile') {
-      if (callback != null) {
-        return randomBytesWithoutNativeModule(size, callback)
-      } else {
-        return randomBytesWithoutNativeModule(size)
-      }
+function randomBytes (size: number, callback?: randomBytesCallback): NodeBuffer | void {
+  if (Environment !== 'NativeMobile') {
+    if (callback != null) {
+      return randomBytesWithoutNativeModule(size, callback)
+    } else {
+      return randomBytesWithoutNativeModule(size)
     }
   }
 
   try {
     const RNRandomBytes = require('react-native').NativeModules.RNRandomBytes
-    RNRandomBytes.randomBytes(size, function (err: Error | null, base64String: string) {
+    if (!callback) {
+        return RNRandomBytes.randomBytesSync(size)
+    }
+    RNRandomBytes.randomBytes(size, (err: Error | null, base64String: string) => {
       if (err != null) {
-        callback(err, null)
+          callback(err, null)
       } else {
-        callback(null, NodeBuffer.from(base64String, 'base64'))
+          callback(null, NodeBuffer.from(base64String, 'base64'))
       }
     })
   // if you reached here
   // may your environment is not supported
   // Please submit PR
   } catch (error) {
-    callback(error, null)
+    if (callback) {
+      callback(error, null)
+    } else {
+      throw error
+    }
   }
 }
 

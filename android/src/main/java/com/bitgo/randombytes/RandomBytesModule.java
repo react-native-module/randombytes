@@ -29,6 +29,11 @@ class RandomBytesModule extends ReactContextBaseJavaModule {
     success.invoke(null, getRandomBytes(size));
   }
 
+  @ReactMethod(isBlockingSynchronousMethod = true)
+  public String randomBytesSync(int size) {
+    return getRandomBytes(size);
+  }
+
   @Override
   public Map<String, Object> getConstants() {
     final Map<String, Object> constants = new HashMap<>();
@@ -42,4 +47,6 @@ class RandomBytesModule extends ReactContextBaseJavaModule {
     sr.nextBytes(output);
     return Base64.encodeToString(output, Base64.NO_WRAP);
   }
+
+
 }
