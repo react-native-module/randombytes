@@ -21,7 +21,8 @@ export default inputSrc
       preserveModules: true,
       external: [
         '@react-native-module/utility',
-        'buffer',
+        'base64-js',
+        'ieee754',
       ],
       plugins: [
         typescript(),
