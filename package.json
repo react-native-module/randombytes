@@ -20,8 +20,7 @@
     "build": "rimraf ./lib && rollup -c ./rollup.config.js && npm run build:types",
     "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir lib/types",
     "release": "npm run build && release-it",
-    "test": "echo 'tests not set up for React Native yet'",
-    "postinstall": "patch-package"
+    "test": "echo 'tests not set up for React Native yet'"
   },
   "dependencies": {
     "@react-native-module/utility": "^0.0.4-0",
@@ -40,7 +39,6 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-n": "^15.2.4",
     "eslint-plugin-promise": "^6.0.0",
-    "patch-package": "^6.4.7",
     "release-it": "^15.1.2",
     "rimraf": "^3.0.2",
     "rollup": "^2.77.0",
