@@ -1,4 +1,4 @@
-import { Buffer as NodeBuffer } from 'buffer'
+import { Buffer as NodeBuffer } from './buffer'
 import { randomBytesCallback } from '.'
 import { MAX_BYTES } from './constants'
 import { Random } from "./random-js";
@@ -19,7 +19,7 @@ export function randomBytesWithoutNativeModule (size: number, callback?: randomB
   if (!crypto.getRandomValues) {
     const random = new Random();
     const randomHex = random.hex(size * 2)
-    const randomBytes = Buffer.from(randomHex, 'hex')
+    const randomBytes = NodeBuffer.from(randomHex, 'hex')
     if (callback != null) {
       callback(null, randomBytes)
     } else {

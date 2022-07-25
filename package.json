@@ -24,7 +24,6 @@
   },
   "dependencies": {
     "@react-native-module/utility": "^0.0.4-0",
-    "buffer": "^6.0.3",
     "random-js": "^2.1.0"
   },
   "devDependencies": {
