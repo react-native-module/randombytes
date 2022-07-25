@@ -1,0 +1,14 @@
+diff --git a/node_modules/random-js/package.json b/node_modules/random-js/package.json
+index 05504dc..6a36a1e 100644
+--- a/node_modules/random-js/package.json
++++ b/node_modules/random-js/package.json
+@@ -17,6 +17,9 @@
+   "module": "dist/random-js.esm.js",
+   "unpkg": "dist/random-js.umd.min.js",
+   "types": "dist/index.d.ts",
++  "react-native": {
++    "crypto": false
++  },
+   "files": [
+     "dist"
+   ],

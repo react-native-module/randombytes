@@ -1,23 +1,30 @@
-import { Environment } from '@react-native-module/utility'
 import { Buffer as NodeBuffer } from 'buffer'
 import { randomBytesCallback } from '.'
 import { MAX_BYTES } from './constants'
+import { Random } from "random-js";
 
 export function randomBytesWithoutNativeModule (size: number): NodeBuffer
 export function randomBytesWithoutNativeModule (size: number, callback: randomBytesCallback): undefined
 
 export function randomBytesWithoutNativeModule (size: number, callback?: randomBytesCallback): NodeBuffer | undefined {
-  if (Environment === 'NativeMobile') {
-    throw Error('randomBytesWithoutNativeModule can not running on NativeMobile')
+  try {
+      const crypto = require('crypto')
+      if (callback) return crypto.randomBytes(size, callback)
+      return crypto.randomBytes(size)
+  } catch (error) {
+
   }
-  if (Environment === 'NodeJs') {
-    const crypto = require('crypto')
-    if (callback) return crypto.randomBytes(size, callback)
-    return crypto.randomBytes(size)
-  }
+  
   const crypto = global.crypto || global.msCrypto
   if (!crypto.getRandomValues) {
-    throw Error('randomBytesWithoutNativeModule can not run (crypto.getRandomValues is not exists)')
+    const random = new Random();
+    const randomHex = random.hex(size * 2)
+    const randomBytes = Buffer.from(randomHex, 'hex')
+    if (callback != null) {
+      callback(null, randomBytes)
+    } else {
+      return randomBytes
+    }
   }
   try {
     const bytes = NodeBuffer.alloc(size)
