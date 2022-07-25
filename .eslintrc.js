@@ -5,23 +5,23 @@ module.exports = {
     },
     "extends": [
       "eslint:recommended",
-      "plugin:@typescript-eslint/recommended"
-    ],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-      "ecmaVersion": "latest",
-    },
-    "plugins": [
-      "@typescript-eslint"
     ],
     "overrides": [
       {
         files: ['*.ts', '*.d.ts'],
         extends: [
-          "standard-with-typescript"
+          "standard-with-typescript",
+          "plugin:@typescript-eslint/recommended"
         ],
+        plugins: {
+          "@typescript-eslint"
+        }
         "parserOptions": {
           "project": "./tsconfig.json"
+        },
+        "parser": "@typescript-eslint/parser",
+        "parserOptions": {
+          "ecmaVersion": "latest",
         },
         rules: {
           '@typescript-eslint/prefer-optional-chain': 0,

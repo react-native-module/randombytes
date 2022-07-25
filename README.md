@@ -18,6 +18,8 @@ randomBytes(4, (err, bytes) => {
 
 ## Installation
 
+This module has peerDependency "react-native"
+
 A typical workflow:
 
 ```
