@@ -1,7 +1,7 @@
-import { Buffer as NodeBuffer } from './buffer'
+import { Buffer as NodeBuffer } from 'buffer'
 import { randomBytesCallback } from '.'
 import { MAX_BYTES } from './constants'
-import { Random } from "./random-js";
+import { Random } from "random-js";
 
 export function randomBytesWithoutNativeModule (size: number): NodeBuffer
 export function randomBytesWithoutNativeModule (size: number, callback: randomBytesCallback): undefined
@@ -22,6 +22,4 @@ export function randomBytesWithoutNativeModule (size: number, callback?: randomB
   } else {
     return randomBytes
   }
-
-  
 }

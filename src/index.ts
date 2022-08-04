@@ -1,4 +1,4 @@
-import { Buffer as NodeBuffer } from './buffer'
+import { Buffer as NodeBuffer } from 'buffer'
 import { randomBytesWithoutNativeModule } from './randomBytesWithoutNativeModule'
 
 export type randomBytesCallback = (err: Error | null, buf: NodeBuffer | null) => undefined
