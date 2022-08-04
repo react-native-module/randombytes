@@ -2,7 +2,7 @@
   "author": "sacru2red <sacru2red@gmail.com>",
   "name": "@react-native-module/randombytes",
   "description": "implementation of randomBytes for React Native",
-  "version": "3.6.6",
+  "version": "4.0.0",
   "main": "lib/cjs/index.js",
   "module": "lib/es/index.js",
   "types": "lib/types/index.d.ts",
@@ -13,7 +13,7 @@
   "homepage": "https://github.com/react-native-module/randombytes",
   "repository": {
     "type": "git",
-    "url": "git+ttps://github.com/react-native-module/randombytes.git"
+    "url": "git+https://github.com/react-native-module/randombytes.git"
   },
   "scripts": {
     "lint": "eslint",
@@ -23,7 +23,6 @@
     "test": "echo 'tests not set up for React Native yet'"
   },
   "dependencies": {
-    "@react-native-module/utility": "^0.0.4-0",
     "buffer": "^6.0.3",
     "random-js": "^2.1.0"
   },
@@ -45,7 +44,8 @@
     "typescript": "^4.7.4"
   },
   "peerDependencies": {
-    "react-native": "*"
+    "react-native": "*",
+    "react": "*"
   },
   "license": "ISC",
   "keywords": [

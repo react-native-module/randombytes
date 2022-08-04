@@ -20,8 +20,8 @@ export default inputSrc
       },
       preserveModules: true,
       external: [
-        '@react-native-module/utility',
         'buffer',
+        'random-js'
       ],
       plugins: [
         typescript(),

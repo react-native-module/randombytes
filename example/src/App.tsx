@@ -7,7 +7,6 @@ export default function App() {
 
   React.useEffect(() => {
     const a = randomBytes(4)
-    console.log('a', a, typeof a)
     setResult(a.toString('hex'))
   }, []);
 
